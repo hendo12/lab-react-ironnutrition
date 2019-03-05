@@ -3,15 +3,35 @@ import logo from './logo.svg';
 import './App.css';
 import 'bulma/css/bulma.css';
 import foods from './foods.json'
+import AddFoods from './AddFoods'
 
 class App extends Component {
   state = {
-    foods:foods
+    foods:foods,
+    funStuff : [1,2,3,4,5]
   }
+
+  addFood = (newFood) => {
+    const foodCopy = [...this.state.foods];
+    foodCopy.push(newFood);
+    this.setState({
+      foods:foodCopy
+    })
+  }
+
+  addFunStuff = () => {
+    const funStuffCopy = [...this.state.funStuff];
+    funStuffCopy.push();
+    this.setState({
+      funStuff:funStuffCopy
+    })
+  }
+
 
   showFoods = () => {
     let list = this.state.foods.map((food, i) => {
-     return <div className="box">
+     return (
+     <div className="box" key={i}>
         <article className="media">
           <div className="media-left">
             <figure className="image is-64x64">
@@ -44,27 +64,20 @@ class App extends Component {
           </div>
         </article>
       </div>
+     )
     })
     return list;
   }
 
-  addFood = () => {
-    let newFood = [...this.state.foods]
-    newFood.push({
-      
-    })
-    this.setState({ //and resets the state to be this newlist with another henry
-      food:newFood
-    })
-  }
-
-  render() {
+  
+  render(){
     return (
       <div className="App">
+        <AddFoods addFood={this.addFood} />
         {this.showFoods()}
-        <button onlick={this.addFood}>Add Food</button>
+                
       </div>
-    );
+    )
   }
 }
 
