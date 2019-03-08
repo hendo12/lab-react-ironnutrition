@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bulma/css/bulma.css';
-import foods from './foods.json'
 
 class AddFoods extends Component {
   state = { 
@@ -29,7 +28,11 @@ class AddFoods extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
-    this.props.addFood(this.state)
+    let name = event.target.name.value;
+    let calories = event.target.calories.value;
+    let image = event.target.image.value;
+
+    this.props.addFood({name,calories, image})
 
     //this.addFoods(this.state)
     //Post this right here 
@@ -48,10 +51,16 @@ class AddFoods extends Component {
           <label>Calories:</label>
           <input type="text" name="calories" value={this.state.calories} onChange={(e) =>this.handleChange(e)}/>
 
-          <label>Image:</label>
+          <label>\Image:</label>
+          <input type="text" name="image" value={this.state.image} onChange={(e) =>this.handleChange(e)}/>
+
           <button>Add Food</button>
 
         </form>
+
+        <button onClick ={this.props.addFunStuff}>click is in the child</button>
+
+
       </div>
     );
   }

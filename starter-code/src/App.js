@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import 'bulma/css/bulma.css';
 import foods from './foods.json'
@@ -8,10 +7,24 @@ import AddFoods from './AddFoods'
 class App extends Component {
   state = {
     foods:foods,
-    funStuff : [1,2,3,4,5]
+    filteredFoods:foods,
+    search: ''
+  }
+
+  handleChange = (e) => {
+    let search = e.target.value
+    let filteredFoods = this.state.foods.filter((food)=>{
+      console.log(search)
+      return food.name.includes(search.toLowerCase())
+    })
+    this.setState({
+      search:e.target.value
+    })
+    return filteredFoods
   }
 
   addFood = (newFood) => {
+    console.log(newFood)
     const foodCopy = [...this.state.foods];
     foodCopy.push(newFood);
     this.setState({
@@ -19,16 +32,8 @@ class App extends Component {
     })
   }
 
-  addFunStuff = () => {
-    const funStuffCopy = [...this.state.funStuff];
-    funStuffCopy.push();
-    this.setState({
-      funStuff:funStuffCopy
-    })
-  }
-
-
   showFoods = () => {
+    console.log(this)
     let list = this.state.foods.map((food, i) => {
      return (
      <div className="box" key={i}>
@@ -52,7 +57,7 @@ class App extends Component {
                 <input
                   className="input"
                   type="number" 
-                  value="1"
+                  //value="1"
                 />
               </div>
               <div className="control">
@@ -73,6 +78,9 @@ class App extends Component {
   render(){
     return (
       <div className="App">
+        <form>
+          <input placeholder="search" onChange={(e) => this.handleChange(e)} type="search" name="search"/>
+        </form>
         <AddFoods addFood={this.addFood} />
         {this.showFoods()}
                 
