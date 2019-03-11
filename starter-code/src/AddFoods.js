@@ -51,7 +51,7 @@ class AddFoods extends Component {
           <label>Calories:</label>
           <input type="text" name="calories" value={this.state.calories} onChange={(e) =>this.handleChange(e)}/>
 
-          <label>\Image:</label>
+          <label>Image:</label>
           <input type="text" name="image" value={this.state.image} onChange={(e) =>this.handleChange(e)}/>
 
           <button>Add Food</button>

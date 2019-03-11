@@ -6,21 +6,21 @@ import AddFoods from './AddFoods'
 
 class App extends Component {
   state = {
-    foods:foods,
+    foods,
+    search: '',
     filteredFoods:foods,
-    search: ''
   }
 
   handleChange = (e) => {
     let search = e.target.value
     let filteredFoods = this.state.foods.filter((food)=>{
-      console.log(search)
-      return food.name.includes(search.toLowerCase())
+      return food.name.toLowerCase().includes(search.toLowerCase())
     })
+    console.log(filteredFoods)
     this.setState({
-      search:e.target.value
+      search,
+      filteredFoods
     })
-    return filteredFoods
   }
 
   addFood = (newFood) => {
@@ -33,14 +33,14 @@ class App extends Component {
   }
 
   showFoods = () => {
-    console.log(this)
-    let list = this.state.foods.map((food, i) => {
+    //console.log(this)
+    let list = this.state.filteredFoods.map((food, i) => {
      return (
      <div className="box" key={i}>
         <article className="media">
           <div className="media-left">
             <figure className="image is-64x64">
-              <img src={food.image} />
+              <img src={food.image} alt={food.name} />
             </figure>
           </div>
           <div className="media-content">
@@ -79,7 +79,7 @@ class App extends Component {
     return (
       <div className="App">
         <form>
-          <input placeholder="search" onChange={(e) => this.handleChange(e)} type="search" name="search"/>
+          <input placeholder="search" onChange={(e) => this.handleChange(e)} type="text" name="search"/>
         </form>
         <AddFoods addFood={this.addFood} />
         {this.showFoods()}
